@@ -431,7 +431,7 @@ const MapView = () => {
                                 />
                             )}
 
-                            {/* 🔥 IDLE (filtered) */}
+                            {/*  IDLE (filtered) */}
                             {idleGroups
                                 .filter((g) =>
                                     pathToUse.some(
@@ -458,7 +458,7 @@ const MapView = () => {
                                     </CircleMarker>
                                 ))}
 
-                            {/* 🔥 STOPPED (filtered) */}
+                            {/*  STOPPED (filtered) */}
                             {stoppedGroups
                                 .filter((g) =>
                                     pathToUse.some(
@@ -485,7 +485,7 @@ const MapView = () => {
                                     </CircleMarker>
                                 ))}
 
-                            {/* 🔥 OVERSPEED (filtered) */}
+                            {/*  OVERSPEED (filtered) */}
                             {tripMeta?.overspeedSegments
                                 .filter((seg) =>
                                     pathToUse.some(

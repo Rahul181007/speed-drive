@@ -5,10 +5,13 @@ import Login from './pages/Login'
 import ProtectedRoute from './components/ProtectedRoute'
 import MapView from './pages/MapView'
 import Signup from './pages/Signup'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
   return (
     <BrowserRouter>
+     <Toaster position="top-right" />
+
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

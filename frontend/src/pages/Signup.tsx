@@ -27,7 +27,9 @@ const Signup = () => {
         }
         catch (error: unknown) {
             setErrorMsg("Something went wrong");
-            console.error("Signup Error", error);
+            if (import.meta.env.DEV) {
+                console.error(error);
+            }
         }
     };
 

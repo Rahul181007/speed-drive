@@ -19,9 +19,13 @@ const Login = () => {
             const res = await API.post("/auth/login", { email, password });
             localStorage.setItem("token", res.data.token);
             setErrorMsg("");
+
+            
             navigate("/dashboard", { replace: true });
         } catch (error) {
-            console.error(error);
+            if (import.meta.env.DEV) {
+                console.error(error);
+            }
             setErrorMsg("Invalid email or password");
         }
     };

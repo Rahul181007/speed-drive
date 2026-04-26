@@ -34,7 +34,7 @@ export class AuthController {
     static async login(req: Request, res: Response) {
         try {
             const { email, password } = req.body;
-            console.log(req.body)
+          
             const user = await UserModel.findOne({ email });
 
             if (!user) {
