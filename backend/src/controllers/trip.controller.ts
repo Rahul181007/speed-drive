@@ -44,4 +44,26 @@ export class TripController {
     res.status(500).json({ message: "Error fetching a trip" });
   }
 }
+
+static async deleteTrip(req: Request, res: Response) {
+  try {
+    const userId = req.userId;
+    const tripId = req.params.id;
+
+    // ensure trip belongs to user
+    const trip = await Trip.findOneAndDelete({
+      _id: tripId,
+      userId
+    });
+
+    if (!trip) {
+      return res.status(404).json({ message: "Trip not found" });
+    }
+
+    return res.json({ message: "Trip deleted successfully" });
+
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting trip" });
+  }
+}
 }
