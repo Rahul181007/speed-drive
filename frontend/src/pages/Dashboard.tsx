@@ -78,6 +78,32 @@ const Dashboard = () => {
         toast.error("Upload failed ❌", { id: toastId });
     }
 };
+
+
+const handleDelete = async (id: string) => {
+
+  const confirmDelete = window.confirm("Delete this trip?");
+  if (!confirmDelete) return;
+
+  const toastId = toast.loading("Deleting...");
+
+  try {
+    await API.delete(`/trips/${id}`);
+
+    toast.success("Trip deleted 🗑️", { id: toastId });
+
+    // update UI instantly
+    setTrips(prev => prev.filter(trip => trip._id !== id));
+
+  } catch (error) {
+
+    if (import.meta.env.DEV) {
+      console.error(error);
+    }
+
+    toast.error("Delete failed ❌", { id: toastId });
+  }
+};
     return (
         <div className="min-h-screen bg-gray-100">
 
@@ -159,6 +185,13 @@ const Dashboard = () => {
                                     >
                                         View
                                     </button>
+
+                                        <button
+      onClick={() => handleDelete(trip._id)}
+      className="text-red-500 hover:underline"
+    >
+      Delete
+    </button>
                                 </li>
                             ))}
                         </ul>
