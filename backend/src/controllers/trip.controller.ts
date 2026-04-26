@@ -50,7 +50,7 @@ static async deleteTrip(req: Request, res: Response) {
     const userId = req.userId;
     const tripId = req.params.id;
 
-    // ensure trip belongs to user
+
     const trip = await Trip.findOneAndDelete({
       _id: tripId,
       userId
