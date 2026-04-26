@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
-import logo from "../assets/Speed drive.jpeg";
+import logo from "../assets/logo.jpeg";
 
 const Login = () => {
     const [email, setEmail] = useState("");

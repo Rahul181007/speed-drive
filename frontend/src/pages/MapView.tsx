@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import API from "../services/api";
 import { useNavigate, useParams } from "react-router-dom";
 import L from "leaflet";
-import logo from "../assets/Speed drive.jpeg";
+import logo from "../assets/logo.jpeg";
 type PathPoint = {
     latitude: number;
     longitude: number;
