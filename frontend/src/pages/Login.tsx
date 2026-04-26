@@ -32,7 +32,7 @@ const Login = () => {
     }, [navigate]);
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gradient-to-r from-green-300 to-blue-300">
+        <div className="flex min-h-screen items-center justify-center bg-linear-to-r from-green-300 to-blue-300">
 
             <div className="w-96 rounded-2xl bg-white p-8 shadow-lg">
 
