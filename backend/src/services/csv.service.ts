@@ -1,6 +1,7 @@
 import fs from "fs"
 import csv from "csv-parser"
 import { getDistance } from "geolib";
+import { Readable } from "stream";
 
 type RawCSVRow = {
     latitude: string;
@@ -42,25 +43,19 @@ const getSpeedKmh = (prev: GPSData, curr: GPSData): number => {
 };
 
 
-export const parsedCsv = (filePath: string): Promise<RawCSVRow[]> => {
-    const results: RawCSVRow[] = [];
+export const parsedCsv = (buffer: Buffer):Promise<RawCSVRow[]> => {
+  return new Promise((resolve, reject) => {
+    const results: any[] = [];
 
-    return new Promise((resolve, reject) => {
+    const stream = Readable.from(buffer.toString());
 
-        fs.createReadStream(filePath)
-            .pipe(csv())
-            .on("data", (row) => {
-                results.push(row);
-            })
-            .on("end", () => {
-                resolve(results);
-            })
-            .on("error", (err) => {
-                reject(err);
-            });
-
-    });
-}
+    stream
+      .pipe(csv())
+      .on("data", (data) => results.push(data))
+      .on("end", () => resolve(results))
+      .on("error", (err) => reject(err));
+  });
+};
 
 
 export const cleanData = (data: RawCSVRow[]): GPSData[] => {

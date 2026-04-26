@@ -49,61 +49,61 @@ const Dashboard = () => {
 
         fetchTrips();
     }, []);
-  const handleUpload = async () => {
-    if (!file || !tripName) {
-        toast.error("Please provide trip name and file");
-        return;
-    }
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("name", tripName);
-
-    const toastId = toast.loading("Uploading...");
-
-    try {
-        await API.post("/upload", formData);
-
-        toast.success("Trip uploaded successfully 🚗", { id: toastId });
-
-        setShowModal(false);
-        setFile(null);
-        setTripName("")
-    } catch (error) {
-
-        if (import.meta.env.DEV) {
-            console.error(error);
+    const handleUpload = async () => {
+        if (!file || !tripName) {
+            toast.error("Please provide trip name and file");
+            return;
         }
 
-        toast.error("Upload failed ❌", { id: toastId });
-    }
-};
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("name", tripName);
+
+        const toastId = toast.loading("Uploading...");
+
+        try {
+            await API.post("/upload", formData);
+
+            toast.success("Trip uploaded successfully 🚗", { id: toastId });
+
+            setShowModal(false);
+            setFile(null);
+            setTripName("")
+        } catch (error) {
+
+            if (import.meta.env.DEV) {
+                console.error(error);
+            }
+
+            toast.error("Upload failed ❌", { id: toastId });
+        }
+    };
 
 
-const handleDelete = async (id: string) => {
+    const handleDelete = async (id: string) => {
 
-  const confirmDelete = window.confirm("Delete this trip?");
-  if (!confirmDelete) return;
+        const confirmDelete = window.confirm("Delete this trip?");
+        if (!confirmDelete) return;
 
-  const toastId = toast.loading("Deleting...");
+        const toastId = toast.loading("Deleting...");
 
-  try {
-    await API.delete(`/trips/${id}`);
+        try {
+            await API.delete(`/trips/${id}`);
 
-    toast.success("Trip deleted 🗑️", { id: toastId });
+            toast.success("Trip deleted 🗑️", { id: toastId });
 
-    // update UI instantly
-    setTrips(prev => prev.filter(trip => trip._id !== id));
+            // update UI instantly
+            setTrips(prev => prev.filter(trip => trip._id !== id));
 
-  } catch (error) {
+        } catch (error) {
 
-    if (import.meta.env.DEV) {
-      console.error(error);
-    }
+            if (import.meta.env.DEV) {
+                console.error(error);
+            }
 
-    toast.error("Delete failed ❌", { id: toastId });
-  }
-};
+            toast.error("Delete failed ❌", { id: toastId });
+        }
+    };
     return (
         <div className="min-h-screen bg-gray-100">
 
@@ -130,11 +130,11 @@ const handleDelete = async (id: string) => {
             {/* Content */}
             <div className="p-6">
 
-                    {error && (
-        <div className="mb-4 rounded bg-red-100 text-red-700 px-4 py-2 text-sm">
-            {error}
-        </div>
-    )}
+                {error && (
+                    <div className="mb-4 rounded bg-red-100 text-red-700 px-4 py-2 text-sm">
+                        {error}
+                    </div>
+                )}
 
                 {/* Welcome Box */}
                 <div className="mb-6 rounded-lg border bg-white p-4 shadow-sm">
@@ -179,19 +179,22 @@ const handleDelete = async (id: string) => {
                                 >
                                     <span>{trip.name}</span>
 
-                                    <button
-                                        onClick={() => navigate(`/map/${trip._id}`)}
-                                        className="text-blue-500"
-                                    >
-                                        View
-                                    </button>
+                                   
+                                    <div className="flex items-center gap-4">
+                                        <button
+                                            onClick={() => navigate(`/map/${trip._id}`)}
+                                            className="text-blue-500 hover:underline"
+                                        >
+                                            View
+                                        </button>
 
                                         <button
-      onClick={() => handleDelete(trip._id)}
-      className="text-red-500 hover:underline"
-    >
-      Delete
-    </button>
+                                            onClick={() => handleDelete(trip._id)}
+                                            className="text-red-500 hover:underline"
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
                                 </li>
                             ))}
                         </ul>

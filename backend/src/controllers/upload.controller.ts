@@ -17,7 +17,7 @@ export class uploadController {
             }
 
             const { name } = req.body;
-            const parsed = await parsedCsv(req.file.path)
+            const parsed = await parsedCsv(req.file.buffer)
             const cleaned = cleanData(parsed)
             const totalDistance = calculateTotalDistance(cleaned);
 
