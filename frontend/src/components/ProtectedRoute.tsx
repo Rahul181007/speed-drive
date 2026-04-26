@@ -4,7 +4,7 @@ import type { JSX } from "react/jsx-dev-runtime";
 const ProtectedRpoute=({children}:{children:JSX.Element})=>{
  const token=localStorage.getItem("token");
  if(!token){
-    return <Navigate to="/"/>
+    return <Navigate to="/" replace />
  }    
  return children
 }

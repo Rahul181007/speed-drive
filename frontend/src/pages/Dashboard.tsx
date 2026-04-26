@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
-
+import logo from "../assets/Speed drive.jpeg";
 type Trip = {
     _id: string;
     name: string;
@@ -78,7 +78,12 @@ const Dashboard = () => {
 
             {/* Header */}
             <div className="flex items-center justify-between bg-white px-6 py-3 shadow">
-                <h1 className="text-lg font-semibold">Speedo</h1>
+                        <div className="flex items-end gap-1">
+            <img src={logo} alt="logo" className="h-8 w-auto" />
+            <span className="text-sm font-semibold text-gray-900 mb-1">
+                Speedo
+            </span>
+        </div>
 
                 <button
                     onClick={() => {

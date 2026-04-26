@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import API from "../services/api";
 import { useNavigate, useParams } from "react-router-dom";
 import L from "leaflet";
-
+import logo from "../assets/Speed drive.jpeg";
 type PathPoint = {
     latitude: number;
     longitude: number;
@@ -317,14 +317,12 @@ const MapView = () => {
         <div className="h-screen w-full bg-gray-100 flex flex-col p-4">
 
             <div className="bg-white border-b px-6 py-3 flex items-center">
-                <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 border-2 border-gray-800 rounded-full flex items-center justify-center text-xs font-bold">
-                        S
-                    </div>
-                    <span className="text-sm font-semibold text-gray-800">
-                        Speedo
-                    </span>
-                </div>
+        <div className="flex items-end gap-1">
+            <img src={logo} alt="logo" className="h-8 w-auto" />
+            <span className="text-sm font-semibold text-gray-900 mb-1">
+                Speedo
+            </span>
+        </div>
             </div>
             {/* ================= HEADER (SEPARATE - LIKE FIGMA) ================= */}
             <div className="p-4 flex-1 overflow-auto">
