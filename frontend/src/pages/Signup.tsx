@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 import logo from "../assets/logo.jpeg";
-import axios from "axios";
+
 const Signup = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
