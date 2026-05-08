@@ -2,15 +2,17 @@ import { Request, Response } from "express";
 import { UserModel } from "../models/user.model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { loginSchema, signupSchema } from "../validation/auth.validation";
 
 export class AuthController {
     static async register(req: Request, res: Response) {
         try {
-            const { name, email, password } = req.body;
 
-            if (!name || !email || !password) {
-                return res.status(400).json({ message: "All fields are required" });
+            const result=signupSchema.safeParse(req.body);
+            if(!result.success){
+                return res.status(400).json({message:result.error.issues[0].message})
             }
+            const { name, email, password } = result.data;
             const existingUser = await UserModel.findOne({ email });
             if (existingUser) {
                 return res.status(400).json({ message: "user with this email already exist" });
@@ -33,7 +35,11 @@ export class AuthController {
 
     static async login(req: Request, res: Response) {
         try {
-            const { email, password } = req.body;
+            const result=loginSchema.safeParse(req.body);
+            if(!result.success){
+                return res.status(400).json({message:result.error.issues[0].message})
+            }
+            const { email, password } = result.data;
           
             const user = await UserModel.findOne({ email });
 
