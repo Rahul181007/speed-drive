@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 import logo from "../assets/logo.jpeg";
+import axios from "axios";
 const Signup = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -26,7 +27,13 @@ const Signup = () => {
             navigate("/", { replace: true });
         }
         catch (error: unknown) {
+        if (axios.isAxiosError(error)) {
+            setErrorMsg(
+                error.response?.data?.message || "Something went wrong"
+            );
+        } else {
             setErrorMsg("Something went wrong");
+        }
             if (import.meta.env.DEV) {
                 console.error(error);
             }
