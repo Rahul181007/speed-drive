@@ -108,12 +108,5 @@ Rahul R
 
 ---
 
-## ✅ After Updating
 
-Run:
 
-```bash
-git add README.md
-git commit -m "Improve README formatting and structure"
-git push
-```
