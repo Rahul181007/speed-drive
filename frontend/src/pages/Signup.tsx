@@ -28,6 +28,8 @@ const Signup = () => {
         }
        catch (error) {
 
+         console.log("FULL ERROR :", error);
+
     const err = error as {
         response?: {
             data?: {
