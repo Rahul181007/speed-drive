@@ -27,6 +27,8 @@ const Signup = () => {
             navigate("/", { replace: true });
         }
         catch (error: unknown) {
+
+            console.log(error);
             if (
                 typeof error === "object" &&
                 error !== null &&
