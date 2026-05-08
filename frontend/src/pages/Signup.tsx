@@ -26,34 +26,24 @@ const Signup = () => {
             setErrorMsg("");
             navigate("/", { replace: true });
         }
-        catch (error: unknown) {
+       catch (error) {
 
-            console.log(error);
-            if (
-                typeof error === "object" &&
-                error !== null &&
-                "response" in error
-            ) {
+    const err = error as {
+        response?: {
+            data?: {
+                message?: string;
+            };
+        };
+    };
 
-                const axiosError = error as {
-                    response?: {
-                        data?: {
-                            message?: string;
-                        };
-                    };
-                };
+    setErrorMsg(
+        err.response?.data?.message || "Something went wrong"
+    );
 
-                setErrorMsg(
-                    axiosError.response?.data?.message || "Something went wrong"
-                );
-
-            } else {
-                setErrorMsg("Something went wrong");
-            }
-            if (import.meta.env.DEV) {
-                console.error(error);
-            }
-        }
+    if (import.meta.env.DEV) {
+        console.error(error);
+    }
+}
     };
 
     useEffect(() => {
