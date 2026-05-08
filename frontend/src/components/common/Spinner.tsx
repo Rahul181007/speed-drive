@@ -5,7 +5,7 @@ type SpinnerProps = {
 const Spinner = ({ size = "h-4 w-4" }: SpinnerProps) => {
     return (
         <div
-            className={`${size} animate-spin rounded-full border-2 border-white border-t-transparent`}
+            className={`${size} animate-spin rounded-full border-2 border-black border-t-transparent`}
         />
     );
 };

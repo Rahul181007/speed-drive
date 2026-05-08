@@ -108,5 +108,71 @@ Rahul R
 
 ---
 
+---
+
+## 📡 API Endpoints
+
+### 🔐 Auth APIs
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/auth/register` | Register a new user |
+| POST | `/auth/login` | Login user |
+
+---
+
+### 🚗 Trip APIs
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/trips` | Fetch all trips |
+| POST | `/upload` | Upload trip CSV |
+| DELETE | `/trips/:id` | Delete trip |
+
+---
+
+## 🔐 Environment Variables
+
+### Backend `.env`
+
+```env
+PORT=5000
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_secret_key
+```
+
+### Frontend `.env`
+
+```env
+VITE_API_URL=http://localhost:5000
+```
+
+---
+
+## 📄 CSV Format
+
+The uploaded CSV file should contain the following columns:
+
+| Column | Description |
+|---|---|
+| latitude | GPS latitude |
+| longitude | GPS longitude |
+| speed | Vehicle speed |
+| timestamp | Recorded time |
+
+---
+
+## 📊 Calculated Metrics
+
+The system calculates:
+
+- Total Distance
+- Stoppage Duration
+- Idling Duration
+- Overspeed Distance
+- Overspeed Segments
+
+---
+
 
 
