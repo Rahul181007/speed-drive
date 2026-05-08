@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 import logo from "../assets/logo.jpeg";
+import { signupSchema } from "../validation/auth.validation";
 
 const Signup = () => {
     const [name, setName] = useState("");
@@ -16,6 +17,11 @@ const Signup = () => {
             setErrorMsg("All fields are required");
             return;
         }
+        const result=signupSchema.safeParse({name,email,password})
+        if(!result.success){
+            setErrorMsg(result.error.issues[0].message)
+            return
+        }
         try {
             await API.post("/auth/register", {
                 name,
@@ -27,8 +33,6 @@ const Signup = () => {
             navigate("/", { replace: true });
         }
        catch (error) {
-
-         console.log("FULL ERROR :", error);
 
     const err = error as {
         response?: {
