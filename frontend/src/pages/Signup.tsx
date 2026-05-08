@@ -10,9 +10,12 @@ const Signup = () => {
     const [password, setPassword] = useState("");
 
     const [errorMsg, setErrorMsg] = useState("");
+
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleSignup = async () => {
+        setErrorMsg("");
         if (!name || !email || !password) {
             setErrorMsg("All fields are required");
             return;
@@ -23,6 +26,7 @@ const Signup = () => {
             return
         }
         try {
+            setLoading(true);
             await API.post("/auth/register", {
                 name,
                 email,
@@ -49,6 +53,9 @@ const Signup = () => {
     if (import.meta.env.DEV) {
         console.error(error);
     }
+}
+finally{
+    setLoading(false);
 }
     };
 
@@ -133,9 +140,10 @@ const Signup = () => {
                 {/* BUTTON */}
                 <button
                     onClick={handleSignup}
+                    disabled={loading}
                     className="w-full bg-black hover:bg-gray-800 transition text-white py-2 rounded-md"
                 >
-                    Sign up
+                     {loading ? "Signing up..." : "Sign up"}
                 </button>
 
                 {/* LOGIN LINK */}

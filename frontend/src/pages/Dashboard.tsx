@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 import logo from "../assets/logo.jpeg";
 import toast from "react-hot-toast";
+import Spinner from "../components/common/Spinner";
 type Trip = {
     _id: string;
     name: string;
@@ -24,7 +25,7 @@ const Dashboard = () => {
     const [tripName, setTripName] = useState("");
     const [file, setFile] = useState<File | null>(null);
     const [trips, setTrips] = useState<Trip[]>([]);
-
+    const [viewLoadingId, setViewLoadingId] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchTrips = async () => {
@@ -62,8 +63,8 @@ const Dashboard = () => {
         const toastId = toast.loading("Uploading...");
 
         try {
-            await API.post("/upload", formData);
-
+            const res = await API.post("/upload", formData);
+            setTrips(prev => [...prev, res.data.trip]);
             toast.success("Trip uploaded successfully 🚗", { id: toastId });
 
             setShowModal(false);
@@ -179,13 +180,24 @@ const Dashboard = () => {
                                 >
                                     <span>{trip.name}</span>
 
-                                   
+
                                     <div className="flex items-center gap-4">
                                         <button
-                                            onClick={() => navigate(`/map/${trip._id}`)}
-                                            className="text-blue-500 hover:underline"
+                                            onClick={() => {
+                                                setViewLoadingId(trip._id);
+
+                                                setTimeout(() => {
+                                                    navigate(`/map/${trip._id}`);
+                                                }, 300);
+                                            }}
+                                            disabled={viewLoadingId === trip._id}
+                                            className="text-blue-500 hover:underline flex items-center gap-2 disabled:opacity-50"
                                         >
-                                            View
+                                            {viewLoadingId === trip._id && (
+                                                <Spinner size="h-3 w-3" />
+                                            )}
+
+                                            {viewLoadingId === trip._id ? "Loading..." : "View"}
                                         </button>
 
                                         <button

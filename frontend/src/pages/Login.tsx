@@ -2,20 +2,25 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 import logo from "../assets/logo.jpeg";
+import { loginSchema } from "../validation/auth.validation";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleLogin = async () => {
-        if (!email || !password) {
-            setErrorMsg("Email and password are required");
+        setErrorMsg("");
+        const result=loginSchema.safeParse({email,password})
+        if (!result.success) {
+            setErrorMsg(result.error.issues[0].message);
             return;
         }
 
         try {
+            setLoading(true);
             const res = await API.post("/auth/login", { email, password });
             localStorage.setItem("token", res.data.token);
             setErrorMsg("");
@@ -27,6 +32,8 @@ const Login = () => {
                 console.error(error);
             }
             setErrorMsg("Invalid email or password");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -92,9 +99,10 @@ const Login = () => {
                 {/* Button */}
                 <button
                     onClick={handleLogin}
+                    disabled={loading}
                     className="w-full bg-black hover:bg-gray-800 transition text-white py-2 rounded-md"
                 >
-                    Sign In
+                    {loading ? "Signing in..." : "Sign In"}
                 </button>
 
                 {/* Signup */}
